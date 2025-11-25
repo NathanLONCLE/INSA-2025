@@ -5,37 +5,83 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Questionnaire - ZeroTouch Metrology</title>
 
+  <!-- Police moderne -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
+    :root {
+      --primary: #0078d7;
+      --bg-light: #f0f4f8;
+      --glass-bg: rgba(255,255,255,0.45);
+      --glass-border: rgba(255,255,255,0.25);
+      --shadow-dark: rgba(0,0,0,0.12);
+    }
+
+    /* DARK MODE AUTO */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-light: #121212;
+        --glass-bg: rgba(255,255,255,0.08);
+        --glass-border: rgba(255,255,255,0.12);
+        --primary: #3ea8ff;
+        --shadow-dark: rgba(255,255,255,0.08);
+      }
+      body {
+        color: #eaeaea;
+      }
+      #instructions {
+        color: #e0e0e0;
+      }
+    }
+
     body {
       margin: 0;
-      font-family: 'Arial', sans-serif;
-      background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+      font-family: "Inter", Arial, sans-serif;
+      background: linear-gradient(135deg, var(--bg-light), #d9e2ec);
       display: flex;
-      justify-content: center;
-      align-items: center;
       flex-direction: column;
+      align-items: center;
       min-height: 100vh;
-      color: #333;
-      padding: 20px;
+      padding: 30px;
+      animation: fadeIn 0.7s ease-out;
     }
 
+    @keyframes fadeIn {
+      from {opacity: 0;}
+      to {opacity: 1;}
+    }
+
+    /* Logo */
+    #logo {
+      width: 180px;
+      margin-bottom: 15px;
+      animation: fadeInUp 0.7s ease-out;
+    }
+
+    /* Titre */
     #titre {
-      font-size: 28px;
-      font-weight: bold;
-      color: #0078d7;
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--primary);
       margin-bottom: 20px;
       text-align: center;
+      animation: fadeInUp 0.7s ease-out;
     }
 
+    /* Carte Formulaire */
     #container {
+      animation: fadeInUp 0.7s ease-out;
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
       position: relative;
       width: 100%;
       max-width: 900px;
       height: 70vh;
-      border-radius: 12px;
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      transition: opacity 0.5s;
+      box-shadow: 0 8px 25px var(--shadow-dark);
+      transition: opacity .5s;
     }
 
     iframe {
@@ -44,83 +90,120 @@
       border: none;
     }
 
+    /* Bouton */
     #overlay {
-      margin-top: 20px;
-      background-color: #0078d7;
+      margin-top: 25px;
+      background: rgba(0,122,255,0.6);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--glass-border);
       color: white;
-      padding: 15px 30px;
-      border-radius: 8px;
+      padding: 16px 32px;
+      border-radius: 12px;
       cursor: pointer;
-      font-weight: bold;
-      font-size: 16px;
-      transition: background 0.3s, transform 0.2s;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      font-weight: 600;
+      font-size: 18px;
+      transition: .3s;
+      box-shadow: 0 6px 16px var(--shadow-dark);
     }
     #overlay:hover {
-      background-color: #005a9e;
-      transform: translateY(-2px);
+      background: rgba(0,122,255,0.85);
+      transform: translateY(-3px);
     }
 
+    /* Phrase d’instruction */
     #instructions {
-      margin-top: 20px;
+      margin-top: 15px;
       font-size: 18px;
       text-align: center;
-      transition: opacity 0.5s;
+      transition: opacity .5s;
+      animation: fadeIn .8s ease-out;
     }
 
+    /* Fade in slide */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(25px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Page de remerciement */
     #message {
       display: none;
       text-align: center;
-      animation: fadeIn 0.5s ease-in-out;
+      animation: fadeIn .7s ease-out;
     }
     #message img {
       max-width: 150px;
       margin-bottom: 20px;
     }
     #message h2 {
-      color: #0078d7;
+      color: var(--primary);
+      font-weight: 600;
     }
     #message p {
       font-size: 18px;
       margin-top: 10px;
     }
 
-    @keyframes fadeIn {
-      from {opacity: 0;}
-      to {opacity: 1;}
+    /* Loader spinner */
+    .spinner {
+      margin: 25px auto;
+      width: 42px;
+      height: 42px;
+      border: 4px solid #ccc;
+      border-top-color: var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      to {transform: rotate(360deg);}
     }
 
-    @media (max-width: 600px) {
-      #container {
-        height: 60vh;
-      }
-      #overlay {
-        padding: 12px 25px;
-        font-size: 14px;
-      }
-      #titre {
-        font-size: 22px;
-      }
+    /* Progress bar */
+    #progressbar {
+      width: 0%;
+      height: 6px;
+      background: var(--primary);
+      animation: fill 2s linear forwards;
+      margin: 18px auto;
+      border-radius: 100px;
     }
+    @keyframes fill {
+      from { width: 0%; }
+      to   { width: 100%; }
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      #container { height: 60vh; }
+      #overlay { width: 100%; font-size: 16px; }
+      #titre { font-size: 24px; }
+    }
+
   </style>
 </head>
 <body>
 
+  <img id="logo" src="logo-ztm.png" alt="ZeroTouch Metrology">
+
   <div id="titre">Questionnaire ZeroTouch Metrology</div>
 
   <div id="container">
-    <iframe src="https://forms.office.com/e/qr6QNdau8F?origin=lprLink" id="formulaire"></iframe>
+    <iframe src="https://forms.office.com/e/qr6QNdau8F?origin=lprLink"></iframe>
   </div>
 
-  <!-- Phrase à masquer -->
-  <h2 id="instructions">Pour recevoir votre nuage 3D, connectez-vous à notre compte LinkedIn et envoyez-nous un message privé !</h2>
+  <h2 id="instructions">
+    Pour recevoir votre nuage 3D, connectez-vous à notre compte LinkedIn et envoyez-nous un message privé.
+  </h2>
 
   <div id="overlay">Envoyer</div>
 
+  <!-- Page Merci -->
   <div id="message">
     <img src="logo-ztm.png" alt="Logo ZeroTouch">
     <h2>Merci d’avoir répondu !</h2>
     <p>Redirection vers notre page LinkedIn...</p>
+    <div class="spinner"></div>
+    <div id="progressbar"></div>
   </div>
 
   <script>
@@ -131,7 +214,7 @@
 
     overlay.addEventListener('click', () => {
 
-      // Fade-out de l'interface
+      // Fade out
       container.style.opacity = 0;
       overlay.style.opacity = 0;
       instructions.style.opacity = 0;
@@ -144,7 +227,7 @@
         message.style.display = 'block';
       }, 500);
 
-      // Redirection après 2 secondes
+      // Redirection
       setTimeout(() => {
         window.location.href = "https://www.linkedin.com/company/zerotouchmetrology/";
       }, 2000);
